@@ -4,6 +4,7 @@
   "description": "",
   "main": "test.js",
   "scripts": {
+    "start": "node index.js",
     "test": "node index.js"
   },
   "author": "",
