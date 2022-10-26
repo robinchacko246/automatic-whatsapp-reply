@@ -5,7 +5,7 @@ var userStages = [];
 wppconnect.create({
     session: 'whatsbot11',
     autoClose: false,
-     puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']} 
+     puppeteer: {headless: true, executablePath: '/path/to/Chrome',args: ['--no-sandbox', '--disable-setuid-sandbox']} 
    // puppeteerOptions: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']}
 })
     .then((client) =>
