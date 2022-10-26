@@ -6,8 +6,8 @@ var userStages = [];
 wppconnect.create({
     session: 'whatsbot',
     autoClose: false,
-    puppeteerOptions: { args: ['--no-sandbox', '--disable-setuid-sandbox'], product: 'firefox' }
-    
+    puppeteerOptions: { args: ['--no-sandbox', '--disable-setuid-sandbox'], product: 'firefox' },
+      ignoreDefaultArgs: ['--disable-extensions']
 })
     .then((client) =>
         client.onMessage((message) => {
