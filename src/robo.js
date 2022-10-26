@@ -85,7 +85,7 @@
 //     let newUser = firebasedb.save(user);
 //     return newUser;
 // }
-
+const app = require('express')();
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const client = new Client({ puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']} });
@@ -145,3 +145,8 @@ if(message.body === sourceMsg) {
 }
 });
 client.initialize();
+const port = 8081;
+
+app.listen(port, ()=>{
+    console.log(`robably listening to heroku ${port} now `, port); // unless $PORT is undefined, in which case you're listening to 8081.
+});
