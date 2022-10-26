@@ -1,0 +1,27 @@
+{
+  "name": "robowhats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "robo.js",
+  "scripts": {
+    "start": "node ./src/robo.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allineo/robowhats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allineo/robowhats/issues"
+  },
+  "homepage": "https://github.com/allineo/robowhats#readme",
+  "dependencies": {
+
+    "whatsapp-web.js": "^1.18.0"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
