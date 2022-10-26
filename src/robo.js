@@ -85,7 +85,7 @@
 //     let newUser = firebasedb.save(user);
 //     return newUser;
 // }
-const app = require('express')();
+
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
 const client = new Client({ puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']} });
@@ -102,21 +102,22 @@ client.on('ready', () => {
     console.log('Client is ready!');
 });
 client.on('message', message => {
-    console.log(message.body);
-    var nr = message.body.search(/robin/i);
-    var loveNumber = message.body.search(/love you/i);
-    console.log("nr",nr);
-nr>=0 ?  message.reply("hello dear 🥰"):"";
-loveNumber>=0 ?  message.reply("hello dear 🥰,i love you"):"";
+//     console.log(message.body);
+//     var nr = message.body.search(/robin/i);
+//     var loveNumber = message.body.search(/love you/i);
+//     console.log("nr",nr);
+// nr>=0 ?  message.reply("hello dear 🥰-{auto generated}"):"";
+// loveNumber>=0 ?  message.reply("hello dear 🥰,i love you-{auto generated}"):"";
 });
 // List of data for automatic reply
 var data = [
-{ id: 1, received: 'Hello', reply: 'Hi'},
-{ id: 2, received: 'Sorry', reply: 'No problem'},
-{ id: 3, received: 'Can we have a call?', reply: 'Please leave a voicemail. Let us connect in an hour. Kind Reards, Robin chacko'},
-{ id: 4, received: 'hi', reply: 'Hello'},
-{ id: 4, received: 'Hi', reply: 'Hello'},
-{ default: 'Please leave a voicemail. Let us connect in an hour. Kind Reards,Robin chacko ' }
+{ id: 1, received: 'Hello', reply: 'Hi-{auto generated}'},
+{ id: 2, received: 'Sorry', reply: 'No problem-{auto generated}'},
+{ id: 3, received: 'Can we have a call?', reply: 'Please leave a voicemail. Let us connect in an hour. Kind Reards, Robin chacko-{auto generated}'},
+{ id: 4, received: 'hi', reply: 'Hello-{auto generated}'},
+{ id: 5, received: 'Hi', reply: 'Hello-{auto generated}'},
+{ id: 6, received: 'hello', reply: 'Hi-{auto generated}'},
+{ default: 'Please leave a voicemail. Let us connect in an hour. Kind Reards,Robin chacko-{auto generated} ' }
 ];
 client.on('message', message => {
   var selectedData = data.find((msg) => {
@@ -145,8 +146,3 @@ if(message.body === sourceMsg) {
 }
 });
 client.initialize();
-const port = 8081;
-
-app.listen(port, ()=>{
-    console.log(`robably listening to heroku ${port} now `, port); // unless $PORT is undefined, in which case you're listening to 8081.
-});
