@@ -1,6 +1,7 @@
 const { Client } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
-const client = new Client({ puppeteer: { headless: true,args: ['--no-sandbox', '--disable-setuid-sandbox']}, session: sessionCfg });
+const client = new Client();
+const browser = await puppeteer.launch({headless: true, args:['--no-sandbox']});
 // Get QR code to scan WhatsAPP
 client.on("qr", (qr) => {
   qrcode.generate(qr, { small: true });
