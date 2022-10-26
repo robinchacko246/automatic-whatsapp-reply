@@ -1,6 +1,10 @@
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const client = new Client();
+const client = new Client({ puppeteer: {headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox']} });
+// You can use an existing session and avoid scanning a QR code by adding a "session" object to the client options.
+// This object must include WABrowserId, WASecretBundle, WAToken1 and WAToken2.
+
+client.initialize();
 // Get QR code to scan WhatsAPP
 client.on('qr', qr => {
     qrcode.generate(qr, {small: true});
