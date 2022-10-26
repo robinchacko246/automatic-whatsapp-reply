@@ -1,96 +1,54 @@
-const wppconnect = require('@wppconnect-team/wppconnect');
-const firebasedb = require('./firebase.js');
-
-var userStages = [];
-
-wppconnect.create({
-    session: 'whatsbot',
-    autoClose: false,
-    puppeteerOptions: { args: [
-        
-        // Required for Docker version of Puppeteer
-		'--no-sandbox',
-		'--disable-setuid-sandbox',
-		// This will write shared memory files into /tmp instead of /dev/shm,
-		// because Docker’s default for /dev/shm is 64MB
-		'--disable-dev-shm-usage',
-    
-    ] }
-})
-    .then((client) =>
-        client.onMessage((message) => {
-            console.log('User typed message: ' + message.body);
-            queryUserByPhone(client, message);
-        }))
-    .catch((error) => console.log(error));
-
-
-async function queryUserByPhone(client, message) {
-    let phone = (message.from).replace(/[^\d]+/g, '');
-    let userdata = await firebasedb.queryByPhone(phone);
-    if (userdata == null) {
-        userdata = await saveUser(message);
-    }
-    console.log('Current user: ' + userdata['id']);
-    stages(client, message, userdata);
+const { Client } = require('whatsapp-web.js');
+const qrcode = require('qrcode-terminal');
+const client = new Client();
+// Get QR code to scan WhatsAPP
+client.on('qr', qr => {
+    qrcode.generate(qr, {small: true});
+});
+client.on('ready', () => {
+    console.log('Client is ready!');
+});
+client.on('message', message => {
+    console.log(message.body);
+    var nr = message.body.search(/robin/i);
+    var loveNumber = message.body.search(/love you/i);
+    console.log("nr",nr);
+nr>=0 ?  message.reply("hello dear 🥰"):"";
+loveNumber>=0 ?  message.reply("hello dear 🥰,i love you"):"";
+});
+// List of data for automatic reply
+var data = [
+{ id: 1, received: 'Hello', reply: 'Hi'},
+{ id: 2, received: 'Sorry', reply: 'No problem'},
+{ id: 3, received: 'Can we have a call?', reply: 'Please leave a voicemail. Let us connect in an hour. Kind Reards, Robin chacko'},
+{ id: 4, received: 'hi', reply: 'Hello'},
+{ id: 4, received: 'Hi', reply: 'Hello'},
+{ default: 'Please leave a voicemail. Let us connect in an hour. Kind Reards,Robin chacko ' }
+];
+client.on('message', message => {
+  var selectedData = data.find((msg) => {
+  if(msg.received === message.body) {
+    return true
+  }
+});
+var sourceMsg, targetMsg;
+if(selectedData && Object.keys(selectedData).length !== 0 && selectedData.constructor === Object) {
+  sourceMsg = selectedData.received;
+  targetMsg = selectedData.reply;
 }
+// test data
+// const sourceMsg = 'Hello';
+// const targetMsg = 'I am occupied at present. You can leave me SMS here, will call you shortly.';
+// send message
 
 
-//  Stages = ola  >>  nome  >>  cpf  >>  fim
-async function stages(client, message, userdata) {
-    if (userStages[message.from] == undefined) {
-        sendWppMessage(client, message.from, `Welcome to Robin's Whatsapp Robot!`);
-    }
-    if (userdata['nome'] == undefined) {
-        if (userStages[message.from] == undefined) {
-            sendWppMessage(client, message.from, 'Type your name*:');
-            userStages[message.from] = 'nome';
-        } else {
-            userdata['nome'] = message.body;
-            firebasedb.update(userdata);
-            sendWppMessage(client, message.from, 'Thanks, ' + message.body);
-           // sendWppMessage(client, message.from, 'Enter your *CPF*:');
-            userStages[message.from] = 'cpf';
-        }
 
-    } 
-    
-    // else if (userdata['cpf'] == undefined) {
-    //     if (userStages[message.from] == undefined) {
-    //         sendWppMessage(client, message.from, 'Digite seu *CPF*:');
-    //         userStages[message.from] = 'cpf';
-    //     } else {
-    //         userdata['cpf'] = (message.body).replace(/[^\d]+/g, '');
-    //         firebasedb.update(userdata);
-    //         sendWppMessage(client, message.from, 'Obrigada por informar seu CPF: ' + message.body);
-    //         sendWppMessage(client, message.from, 'Fim');
-    //         userStages[message.from] = 'fim';
-    //     }
 
-    // } else {
-    //     if (userStages[message.from] == undefined) {
-    //         userStages[message.from] = 'fim';
-    //     }
-    //     sendWppMessage(client, message.from, 'Fim');
-    // }
+
+if(message.body === sourceMsg) {
+  message.reply(targetMsg);
+} else {
+ // message.reply("Please call me in 8138813237. Kind Reards,Robin chacko");
 }
-
-
-function sendWppMessage(client, sendTo, text) {
-    client.sendText(sendTo, text)
-        .then((result) => {
-            // console.log('SUCESSO: ', result); 
-        })
-        .catch((erro) => {
-            console.error('ERRO: ', erro);
-        });
-}
-
-async function saveUser(message) {
-    let user = {
-       // 'pushname': (message['sender']['pushname'] != undefined) ? message['sender']['pushname'] : '',
-        'whatsapp': (message.from).replace(/[^\d]+/g, '')
-    }
-    let newUser = firebasedb.save(user);
-    return newUser;
-}
+});
+client.initialize();
