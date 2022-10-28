@@ -114,12 +114,20 @@ client.on('message', message => {
 var data = [
 { id: 1, received: 'Hello', reply: 'Hi-{auto generated-robinbot}'},
 { id: 2, received: 'Sorry', reply: 'No problem-{auto generated-robinbot}'},
-{ id: 3, received: 'Can we have a call?', reply: 'Please leave a voicemail. Let us connect in an hour. Kind Reards, Robin chacko-{auto generated-robinbot}'},
+{ id: 3, received: 'Can we have a call?', reply: 'Please leave a voice message. Let us connect in an hour. Kind Reards, Robin chacko-{auto generated-robinbot}'},
 { id: 4, received: 'hi', reply: 'Hello-{auto generated-robinbot}'},
 { id: 5, received: 'Hi', reply: 'Hello-{auto generated-robinbot}'},
 { id: 6, received: 'hello', reply: 'Hi-{auto generated-robinbot}'},
 { id: 7, received: 'da', reply: 'Hi-{auto generated-robinbot}'},
 { id: 8, received: 'Da', reply: 'Hi-{auto generated-robinbot}'},
+{ id: 9, received: 'sorry', reply: 'No problem-{auto generated-robinbot}'},
+{ id: 10, received: 'call', reply: 'Please leave a voicemessage. Let us connect in an hour. Kind Reards, Robin chacko-{auto generated-robinbot}}'},
+{ id: 11, received: 'Oii', reply: 'Hi-{auto generated-robinbot}'},
+{ id: 12, received: 'oii', reply: 'Hi-{auto generated-robinbot}'},
+{ id: 13, received: 'oi', reply: 'Hi-{auto generated-robinbot}'},
+{ id: 14, received: 'Oi', reply: 'Hi-{auto generated-robinbot}'},
+{ id: 15, received: '@Robin', reply: 'Hi-{auto generated-robinbot}'},
+
 { default: 'Please leave a voicemail. Let us connect in an hour. Kind Reards,Robin chacko-{auto generated-robinbot} ' }
 ];
 client.on('message', message => {
